@@ -4,6 +4,25 @@
     <title>🔖标签 on Cheny&#39;s Blog</title>
     <link>https://cheny-chui.github.io/tags/</link>
     <description>Recent content in 🔖标签 on Cheny&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://cheny-chui.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 05 Apr 2022 00:13:47 +0800</lastBuildDate><atom:link href="https://cheny-chui.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Network</title>
+      <link>https://cheny-chui.github.io/tags/network/</link>
+      <pubDate>Tue, 05 Apr 2022 00:13:47 +0800</pubDate>
+      
+      <guid>https://cheny-chui.github.io/tags/network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Quic</title>
+      <link>https://cheny-chui.github.io/tags/quic/</link>
+      <pubDate>Tue, 05 Apr 2022 00:13:47 +0800</pubDate>
+      
+      <guid>https://cheny-chui.github.io/tags/quic/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
