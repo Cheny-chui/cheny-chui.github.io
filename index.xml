@@ -5,19 +5,30 @@
     <link>https://cheny-chui.github.io/</link>
     <description>Recent content on Cheny&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 05 Apr 2022 00:13:47 +0800</lastBuildDate><atom:link href="https://cheny-chui.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Apr 2022 18:12:13 +0800</lastBuildDate><atom:link href="https://cheny-chui.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>基于QUIC的HTTP3的优势</title>
+      <title>HTTP发展史</title>
+      <link>https://cheny-chui.github.io/posts/http%E5%8F%91%E5%B1%95%E5%8F%B2/</link>
+      <pubDate>Thu, 07 Apr 2022 18:12:13 +0800</pubDate>
+      
+      <guid>https://cheny-chui.github.io/posts/http%E5%8F%91%E5%B1%95%E5%8F%B2/</guid>
+      <description>Evolution of HTTP - HTTP | MDN
+HTTP/0.9  也被称作单行协议 请求由单行组成，且只有GET方法 服务器只能回应html文件  请求和响应
+GET /mypage.html&amp;lt;HTML&amp;gt;A page.&amp;lt;/HTML&amp;gt; HTTP/1.0  添加了POST和HEAD方法 在get后添加版本信息（现在是HTTP/1.0) 支持状态码 支持HTTP头的概念，以传输元数据 支持非HTML文件的数据  TCP连接不可复用，每次传送完成后TCP连接就会断开
+HTTP/1.1  首个标准HTTP协议，澄清了HTTP/1.0中的歧义并引入改进  添加了OPTINOS,PUT,DELETE,TRACE和CONNECT方法 支持TCP连接复用 支持流水线，允许在上一个请求应答前发送下一个请求 支持分块响应 支持额外的缓存控制机制 支持C/S的内容协商以达成语言、编码、类型的一致 Host头允许一个ip地址提供不同的域名    SSL：加密传输  网景在1994年为HTTP/1.1添加了一个加密传输层：SSL  SSL1.0并未发布，SSL2.0,3.0最终被标准化为TLS    扩展HTTP Method  在一开始，通过直接扩充协议的方法，扩充HTTP API  就像 HTTP GET一样   后来，根据REST模式，通过基本的HTTP方法访问特定URL来实现复杂功能 REST模式的代表：  Server-sent events  服务器可随时发送信息不用等客户端请求   WebSocket  HTTP的改进      HTTP/2.</description>
+    </item>
+    
+    <item>
+      <title>HTTP3的改进</title>
       <link>https://cheny-chui.github.io/posts/%E5%9F%BA%E4%BA%8Equic%E7%9A%84http3%E7%9A%84%E4%BC%98%E5%8A%BF/</link>
       <pubDate>Tue, 05 Apr 2022 00:13:47 +0800</pubDate>
       
       <guid>https://cheny-chui.github.io/posts/%E5%9F%BA%E4%BA%8Equic%E7%9A%84http3%E7%9A%84%E4%BC%98%E5%8A%BF/</guid>
-      <description>QUIC: quick UDP internet connection
-TCP: transmission control protocol
-0RTT建立连接 首次连接  无法做到0RTT server需要与client进行1RTT的建立连接过程  client发送client hello给server server将config返回给client   这个config是必须的，client需要根据config对信息进行加密发送  0RTT  如果有保存server的config，就可以直接向server发送加密数据，也就是0RTT的来源  连接迁移 TCP的连接  TCP连接通过 源ip，目的ip，源端口，目的端口，协议号 唯一五元组来标识 但五元组的任何参数发生改变，就需要重新建立TCP连接  因此在wifi-数据直接切换时，回导致连接切换，十分影响体验    QUIC的连接  QUIC通过一个64bit的连接ID来标识  这样就可以支持wifi数据之间的无缝切换，做到连接迁移    移除Head-of-Line问题的多路复用 队头问题
-  移除Head-Of-Line问题的多路复用
-Head-of-Line Blocking in QUIC and HTTP/3: The Details
- 什么是HOL  一个低速设备阻碍其他设备通信，即队头的问题可以阻塞整个队列   HTTP/1.1中的HOL  1.1中，HTTP只是简单的加上一个HTTP头，然后给TCP 当css比js文件小得多，但先请求js时，会导致css本来可以先被浏览器下载下来适配却必须等待js文件的下载，因此出现HOL问题 利用多路复用可以解决  将每个文件分成若干个小块，每个文件的块交替发送 但是1.</description>
+      <description>减少建立连接的时间 减少TLS握手的时间  QUIC将C/S协商秘钥、协议的过程作为初始握手的一部分 当客户端打开连接时，响应数据包包含未来加密需要使用的数据  减少QUIC握手的时间  在第二次通信时，由于客户端有缓存服务器的协商数据，因此可以直接发送信息  移除Head-of-Line问题的多路复用 Head-of-Line Blocking in QUIC and HTTP/3: The Details
+什么是队头问题  一个低速设备阻碍其他设备通信 在HTTP中：一个大文件先被下载，那么整个网页的其他资源将等待大文件的下载，于是被阻塞  HTTP/1.1中的HOL  1.1中，HTTP只是简单的加上一个HTTP头，然后给TCP 当css比js文件小得多，但先请求js时，会导致css本来可以先被浏览器下载下来适配却必须等待js文件的下载，因此出现HOL问题 利用多路复用可以解决  将每个文件分成若干个小块，每个文件的块交替发送 但是1.1协议在底层不支持多路复用，因为1.1的头只有一个总长度，没有编号字段 1.1必须完整的发完一个资源   1.1使用建立多个TCP链接来解决HOL问题  但是多个TCP的开销无法接受    HTTP/2中的HOL  每个资源用一个流发送 还可以设置每个流的优先级，调整块的发送方式，来合理的将资源发送给浏览器  缺陷  看似解决了不同资源之间的HOL问题**，但**只解决了HTTP级别的HOL，未解决TCP级别的HOL 当多个HTTP资源复用到一个TCP链接上时   当TCP报文丢失，所有之后的报文都需要等待，就算他们中间有和丢失报文无关的HTTP资源
+  如下的1，3到达但是2未到达，虽然在HTTP看来，stream1的包都到了，但是由于stream2有gap，所以HTTP无法将TCP报文3交给浏览器（不能把TCP报文拆开）
+    未到达的TCP报文（顺序在前）即为之后报文的HOL
+   由于TCP级别的HOL，实际上HTTP2和1.1的性能差距不大，因为1.1会开几个TCP连接  HTTP1.1的流水线  流水线可以解除请求的HOL，但是会导致响应的HOL更加难以预测  TLS中的HOL  TLS必须完整加密，因此TLS也可能出现HOL QUIC整合了TLS，对每个块分别加密，损失一定性能，避免HOL  HTTP3（QUIC）中的HOL  QUIC使用UDP作为底层协议，并且自己实现了重传机制，允许了传输层的复用，可以避免HTTP/2的假性消除HOL问题  缺陷  因为一个资源的顺序提交无法避免，QUIC在一个资源中依然存在HOL问题 现实中，并不会发生多少丢包，而在丢包率低的网络中过分复用，会导致每个资源加载完毕的时间都较晚，这样会延迟浏览器的解析（浏览器需要完整资源），弊大于利 在大多数情况下，QUIC的HOL移除可能并不会带来明显的提升，但QUIC的其他特性（如 ）可能带来明显的性能提升，因此分析QUIC相较于HTTP2的性能提升很有意义  其他改进 单独加密数据包  消除TLS需要资源被完整加密导致加密数据等待部分数据包 这在TCP中是不可能的  TLS在上层，TCP无法知道字节流中TLS包的边界。    连接迁移  TCP使用(sourceIP,targetIP,sourcePort,targetPort,protocolID) 来标识连接 QUIC使用一个唯一的连接ID来标识 当发生网络切换时（IP地址发生变化）  TCP的每个连接会超时，然后重新连接 通过ID标识的QUIC的原始连接依然有效    </description>
     </item>
     
   </channel>
